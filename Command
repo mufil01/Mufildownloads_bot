@@ -1,0 +1,47 @@
+import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent
+import net.dv8tion.jda.api.hooks.ListenerAdapter
+
+import javax.security.auth.login.LoginException
+
+public class MyBot extends ListenerAdapter {
+
+    public static void main(String[] args) {
+        try {
+            JDABuilder builder = JDABuilder.createDefaultHTTP API:
+            7600097713: AAGc9GPYMsKKzbc4LtdDmes1BU7tfbsMp0s
+            builder.addEventListeners(new MyBot())
+            builder.build()
+        } catch(LoginException e) {
+            e.printStackTrace()
+        }
+    }
+
+    @ Override
+    public void onMessageReceived(MessageReceivedEvent event) {
+        String message = event.getMessage().getContentRaw()
+
+        if (message.equalsIgnoreCase("!start")) {
+            event.getChannel().sendMessage("Bonjour ! Je suis votre bot. Voici comment m'utiliser :\n"
+                                           + "!help - Affiche la liste des commandes disponibles\n"
+                                           + "!info - Donne des informations sur le bot\n"
+                                           + "!ping - Répond avec 'Pong!'").queue()
+        }
+
+        if (message.equalsIgnoreCase("!help")) {
+            event.getChannel().sendMessage("Voici les commandes disponibles :\n"
+                                           + "!start - Démarre le bot et affiche les instructions\n"
+                                           + "!info - Donne des informations sur le bot\n"
+                                           + "!ping - Répond avec 'Pong!'").queue()
+        }
+
+        if (message.equalsIgnoreCase("!info")) {
+            event.getChannel().sendMessage(
+                "Je suis un bot développé en Java avec JDA. Je peux répondre à vos commandes !").queue()
+        }
+
+        if (message.equalsIgnoreCase("!ping")) {
+            event.getChannel().sendMessage("Pong!").queue()
+        }
+    }
+}
